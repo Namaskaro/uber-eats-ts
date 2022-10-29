@@ -1,0 +1,6 @@
+mutation createAccountMutation($email: String!, $password: String!, $role: UserRole!) {
+  createAccount(input: { email: $email, password: $password, role: $role }) {
+    ok
+    error
+  }
+}

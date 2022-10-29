@@ -1,0 +1,6 @@
+mutation editProfile($email: String!) {
+  editProfile(input: { email: $email }) {
+    ok
+    error
+  }
+}

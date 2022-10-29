@@ -1,30 +1,45 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <component :is="layout"> </component>
+    <notifications />
   </div>
-  <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { watchEffect, computed, watch } from 'vue';
+import { useMe } from '@/hooks/useGetCurrentUser';
+import AuthLayout from '@/layouts/AuthLayout.vue';
+import UberLayout from '@/layouts/UberLayout.vue';
 
-#nav {
-  padding: 30px;
+export default {
+  components: {
+    AuthLayout,
+    UberLayout,
+  },
+  computed: {
+    layout() {
+      return `${this.$route.meta.layout || 'shop'}-layout`;
+    },
+  },
+  setup() {
+    const { result } = useMe();
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    const currentUser = computed(() => {
+      return result.value.me.email;
+    });
+    watch(result, () => {
+      if(!result.value) {
+        router.push('/login');
+      }
+    })
+   
+    console.log(result);
+    return {
+      result,
+      currentUser,
+    };
+  },
+};
+</script>
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<style></style>

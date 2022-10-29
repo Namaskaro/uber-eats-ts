@@ -5,9 +5,23 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "apollo:codegen": "rimraf src/__api__ && apollo client:codegen src/__api__ --target=typescript --outputFlat",
+    "precodegen": "apollo schema:download --endpoint=http://127.0.0.1:4000/graphql",
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.8",
+    "@kyvg/vue3-notification": "^2.3.4",
+    "@vue/apollo-composable": "^4.0.0-alpha.16",
+    "@vuelidate/core": "^2.0.0-alpha.34",
+    "@vuelidate/validators": "^2.0.0-alpha.26",
+    "apollo": "^2.33.9",
+    "autoprefixer": "^9.8.8",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.12.6",
+    "postcss": "^7.0.39",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
@@ -26,7 +40,6 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
-    "node-sass": "^4.12.0",
     "prettier": "^2.2.1",
     "sass-loader": "^8.0.2",
     "typescript": "~4.1.5"
@@ -46,7 +59,36 @@
     "parserOptions": {
       "ecmaVersion": 2020
     },
-    "rules": {}
+    "rules": {
+      "max-len": "off",
+      "unused-vars": "off",
+      "no-unused-vars": "off",
+      "no-undef": "off",
+      "arrow-parens": "off",
+      "linebreak-style": "off",
+      "no-shadow": "off",
+      "import/prefer-default-export": "off",
+      "arrow-body-style": "off",
+      "no-unused-expressions": "off",
+      "no-return-assign": "off",
+      "prefer-destructuring": "off",
+      "no-console": "off",
+      "no-underscore-dangle": "off",
+      "no-plusplus": "off",
+      "object-curly-newline": "off",
+      "vue/no-unused-vars": "off",
+      "no-param-reassign": "off",
+      "consistent-return": "off",
+      "prefer-template": "off",
+      "vue/no-unused-components": "off",
+      "no-sequences": "off",
+      "indent": "off",
+      "no-prototype-builtins": "off",
+      "import/no-extraneous-dependencies": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",
