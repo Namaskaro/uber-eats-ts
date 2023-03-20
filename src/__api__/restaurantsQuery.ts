@@ -36,6 +36,9 @@ export interface restaurantsQuery_restaurants_results {
   name: string;
   coverImg: string;
   address: string;
+  deliveryCost: number | null;
+  deliveryTime: string | null;
+  minimalOrder: number | null;
   category: restaurantsQuery_restaurants_results_category | null;
 }
 

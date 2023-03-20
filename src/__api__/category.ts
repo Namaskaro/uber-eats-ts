@@ -30,7 +30,7 @@ export interface category_category_category {
   coverImg: string | null;
   slug: string;
   restaurantCount: number;
-  restaurants: category_category_category_restaurants[];
+  restaurants: category_category_category_restaurants[] | null;
 }
 
 export interface category_category {

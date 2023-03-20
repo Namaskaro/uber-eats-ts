@@ -6,15 +6,14 @@
 </template>
 
 <script>
-import { watchEffect, computed, watch } from 'vue';
-import { useMe } from '@/hooks/useGetCurrentUser';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import UberLayout from '@/layouts/UberLayout.vue';
-
+import DashboardLayout from '@/layouts/DashboardLayout.vue';
 export default {
   components: {
     AuthLayout,
     UberLayout,
+    DashboardLayout,
   },
   computed: {
     layout() {
@@ -22,22 +21,7 @@ export default {
     },
   },
   setup() {
-    const { result } = useMe();
-
-    const currentUser = computed(() => {
-      return result.value.me.email;
-    });
-    watch(result, () => {
-      if(!result.value) {
-        router.push('/login');
-      }
-    })
-   
-    console.log(result);
-    return {
-      result,
-      currentUser,
-    };
+    return {};
   },
 };
 </script>

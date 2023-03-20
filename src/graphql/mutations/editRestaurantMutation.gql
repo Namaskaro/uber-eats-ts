@@ -1,0 +1,26 @@
+mutation editRestaurant(
+  $name: String!
+  $coverImg: String!
+  $address: String!
+  $categoryName: String!
+  $minimalOrder: Float!
+  $deliveryCost: Float!
+  $deliveryTime: String!
+  $restaurantId: Float!
+) {
+  editRestaurant(
+    input: {
+      name: $name
+      coverImg: $coverImg
+      address: $address
+      categoryName: $categoryName
+      minimalOrder: $minimalOrder
+      deliveryCost: $deliveryCost
+      deliveryTime: $deliveryTime
+      restaurantId: $restaurantId
+    }
+  ) {
+    ok
+    error
+  }
+}

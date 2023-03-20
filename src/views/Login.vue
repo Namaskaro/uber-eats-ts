@@ -6,25 +6,34 @@
     <form class="grid gap-3 mt-5 w-full" @submit.prevent="loginUser">
       <UberInput v-model="email" label="Email" />
       <UberInput v-model="password" label="Password" />
-      <button>Login</button>
+      <UberButton text="Login" :isDisabled="false" :isLoading="false" type="uber"> </UberButton>
+      <div class="mt-4 text-center">
+        <span class="text-sm text-center">
+          Don't have account?
+          <router-link class="text-green-500 text-sm cursor-pointer" :to="{ name: 'register' }"
+            >Register</router-link
+          >
+        </span>
+      </div>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import gql from 'graphql-tag';
-import { useMutation, useQuery, useResult } from '@vue/apollo-composable';
+import { ref, defineComponent, computed, Ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import { useMutation } from '@vue/apollo-composable';
 import loginMutation from '@/graphql/mutations/loginMutation.gql';
-// import getCurrentUser from '@/graphql/queries/getCurrentUser.gql';
 import UberInput from '@/components/UberInput.vue';
-import { useMe } from '@/hooks/useGetCurrentUser';
+import UberButton from '@/components/UberButton.vue';
+import { notify } from '@kyvg/vue3-notification';
+import { email } from '@vuelidate/validators';
 
 export default defineComponent({
   name: 'Login',
   components: {
     UberInput,
+    UberButton,
   },
   setup() {
     const email = ref<string>('');
@@ -33,54 +42,23 @@ export default defineComponent({
 
     const router = useRouter();
 
-    const ME_QUERY = gql`
-      query meQuery {
-        me {
-          id
-          role
-          email
-          verified
-          isAuthenticated
-      }
-  }
-`;
-
-    // const currentUser = useResult(result, null, (data) => data.me);
-
-    const { result: user, variables } = useQuery();
-
-    const currentUser = computed(() => {
-      return user.value.me;
-    });
-
-    const isUserAuthenticated = computed(() => {
-      return user.value.me.isAuthenticated;
-    });
-
     const { mutate: loginUser, onDone } = useMutation(loginMutation, () => ({
       variables: {
         email: email.value,
         password: password.value,
-        isAuthenticated: true,
-      },
-      update: (cache, { data: { loginUser } }) => {
-        let data = cache.readQuery({ query: user })
-        data = {
-          ...data,
-          messages: [
-            ...data.messages,
-            sendMessage,
-          ],
-        }
-        cache.writeQuery({ query: MESSAGES, data })
       },
     }));
 
-    console.log(isUserAuthenticated)
-
     onDone((loginMutation) => {
       localStorage.setItem('token', loginMutation.data?.login.token as string);
-      router.push('/');
+      const isAuthToken = localStorage.getItem('token');
+      console.log(isAuthToken);
+      if (isAuthToken !== '') {
+        router.push('/');
+        notify({
+          text: `You are logged in`,
+        });
+      }
     });
 
     return {
@@ -88,11 +66,9 @@ export default defineComponent({
       password,
       router,
       authToken,
-      currentUser,
+      // currentUser,
       // result,
       loginUser,
-      user,
-      isUserAuthenticated,
     };
   },
 });

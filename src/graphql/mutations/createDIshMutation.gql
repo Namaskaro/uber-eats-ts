@@ -1,0 +1,14 @@
+mutation CREATE_DISH(
+$name: String!
+$price: Float!
+$photo: String!
+$description: String!
+$options: DIshOptionInputType!
+$restaurantId: Float!
+){
+    createDish() 
+    {
+        ok
+        error
+    }
+}

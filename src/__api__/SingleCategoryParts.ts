@@ -28,5 +28,5 @@ export interface SingleCategoryParts {
   coverImg: string | null;
   slug: string;
   restaurantCount: number;
-  restaurants: SingleCategoryParts_restaurants[];
+  restaurants: SingleCategoryParts_restaurants[] | null;
 }

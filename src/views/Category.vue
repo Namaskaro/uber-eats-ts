@@ -1,7 +1,17 @@
 <template>
   <div class="category">
-    <div v-for="restaurant in restaurants" :key="restaurant.id">
-      <h2>{{ restaurant.name }}</h2>
+    <div class="max-w-screen-2xl mx-auto mt-8">
+      <div class="grid grid-cols-3 gap-7">
+        <UberRestaurant
+          v-for="restaurant in restaurants"
+          :key="restaurant.id"
+          :id="restaurant.id"
+          :name="restaurant.name"
+          :coverImg="restaurant.coverImg"
+          :address="restaurant.address"
+          :categoryName="restaurant.category?.name" />
+        <UberLoader v-show="loading" v-for="loader in [...new Array(4)]" :key="loader" />
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +21,8 @@ import { useQuery } from '@vue/apollo-composable';
 import { defineComponent } from '@vue/runtime-core';
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import UberRestaurant from '../components/UberRestaurant.vue';
+import UberLoader from '../components/UberLoader.vue';
 import { SINGLE_CATEGORY_FRAGMENT } from '@/graphql/fragments/fragments';
 
 import { category, categoryVariables } from '@/__api__/category';
@@ -32,9 +44,13 @@ const CATEGORY = gql`
 `;
 
 export default defineComponent({
+  components: {
+    UberRestaurant,
+    UberLoader,
+  },
   setup() {
     const route = useRoute();
-    const { result, variables } = useQuery<category, categoryVariables>(CATEGORY, {
+    const { result, variables, loading } = useQuery<category, categoryVariables>(CATEGORY, {
       input: {
         page: 1,
         slug: route.params.slug as string,
@@ -42,17 +58,13 @@ export default defineComponent({
     });
 
     const restaurants = computed(() => {
-      return result?.value?.category?.category?.restaurants;
+      return result?.value?.category?.category?.restaurants ?? [];
     });
-    console.log(restaurants);
 
-    // onMounted(() => {
-    //   const slug = route.params.slug;
-    //   console.log(slug);
-    // });
     return {
       result,
       restaurants,
+      loading,
     };
   },
 });

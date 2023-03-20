@@ -1,9 +1,9 @@
 query meQuery {
-    me {
-      id
-      role
-      email
-      verified
-      isAuthenticated
-    }
+  me {
+    id
+    role
+    email
+    verified
+    isAuthenticated
   }
+}

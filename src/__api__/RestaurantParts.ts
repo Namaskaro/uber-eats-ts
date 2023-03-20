@@ -10,6 +10,7 @@
 export interface RestaurantParts_category {
   __typename: "Category";
   name: string;
+  slug: string;
 }
 
 export interface RestaurantParts {
@@ -18,5 +19,8 @@ export interface RestaurantParts {
   name: string;
   coverImg: string;
   address: string;
+  deliveryCost: number | null;
+  deliveryTime: string | null;
+  minimalOrder: number | null;
   category: RestaurantParts_category | null;
 }

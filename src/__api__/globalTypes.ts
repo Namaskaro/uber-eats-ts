@@ -18,8 +18,17 @@ export interface CategoryInput {
   slug: string;
 }
 
+export interface RestaurantInput {
+  restaurantId: number;
+}
+
 export interface RestaurantsInput {
   page?: number | null;
+}
+
+export interface SearchRestaurantInput {
+  page?: number | null;
+  query: string;
 }
 
 //==============================================================

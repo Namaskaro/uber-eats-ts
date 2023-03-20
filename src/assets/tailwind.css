@@ -9,4 +9,8 @@
   @apply outline-none border border-green-400;
 }
 
+.input_search {
+  @apply bg-gray-100 shadow-inner py-3 px-2  rounded-tl-lg rounded-bl-lg;
+}
+
 @tailwind utilities;

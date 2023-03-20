@@ -1,0 +1,24 @@
+mutation createRestaurantByOwner(
+  $name: String!
+  $coverImg: String!
+  $address: String!
+  $categoryName: String!
+  $minimalOrder: Float!
+  $deliveryCost: Float!
+  $deliveryTime: String!
+) {
+  createRestaurant(
+    input: {
+      name: $name
+      coverImg: $coverImg
+      address: $address
+      categoryName: $categoryName
+      minimalOrder: $minimalOrder
+      deliveryCost: $deliveryCost
+      deliveryTime: $deliveryTime
+    }
+  ) {
+    ok
+    error
+  }
+}

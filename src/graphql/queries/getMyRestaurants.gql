@@ -1,0 +1,19 @@
+query getMyRestaurants {
+  myRestaurants {
+    ok
+    error
+    restaurants {
+      id
+      name
+      coverImg
+      address
+      deliveryCost
+      deliveryTime
+      minimalOrder
+      category {
+        name
+        slug
+      }
+    }
+  }
+}
